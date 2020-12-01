@@ -1,0 +1,141 @@
+<button (click)="findData()">Find Data</button>
+<div fxHide fxShow.gt-sm>
+<ais-instantsearch
+  [config]="{
+    apiKey: '6a279064ee8ee83c68baa78bc0e83dbd',
+    appId: 'HJN7F66MDX',
+    indexName: 'pathfinderSpells',
+    routing: true
+  }">
+
+<ais-search-box ></ais-search-box>
+<br>
+  <ais-hits>
+    <ng-template let-hits="hits" let-results="results">
+        <div *ngIf="hits.length === 0">
+            No results found matching <strong>{{results.query}}</strong>.
+        </div>   
+        <div *ngIf="results.query">
+            <mat-accordion class="example-headers-align">
+                <div *ngFor="let hit of hits" class="content">
+                        <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <ais-highlight attribute="name" [hit]="hit"></ais-highlight>
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                        <table>
+                                            <tr>
+                                                <th *ngIf="hit.traditions.includes('arcane'); else emptyArcane"><mat-chip-list><mat-chip style="color: rgb(0, 102, 255)">Arcane</mat-chip></mat-chip-list></th>
+                                                <ng-template #emptyArcane><th></th></ng-template>
+                                                <th *ngIf="hit.traditions.includes('divine'); else emptyDivine"><mat-chip-list><mat-chip style="color: orange">Divine</mat-chip></mat-chip-list></th>
+                                                <ng-template #emptyDivine><th></th></ng-template>
+                                                <th *ngIf="hit.traditions.includes('occult'); else emptyOccult"><mat-chip-list><mat-chip style="color: purple">Occult</mat-chip></mat-chip-list></th>
+                                                <ng-template #emptyOccult><th></th></ng-template>
+                                                <th *ngIf="hit.traditions.includes('primal'); else emptyPrimal"><mat-chip-list><mat-chip style="color: green">Primal</mat-chip></mat-chip-list></th>
+                                                <ng-template #emptyPrimal><th></th></ng-template>
+                                            </tr>
+                                        </table>
+                            </mat-panel-description>
+                            <mat-panel-description>
+                                Level: {{hit.level}}
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <p>{{hit.source}}</p>
+                        </mat-expansion-panel>
+                        <br>
+                </div>
+            </mat-accordion>
+        </div>
+      </ng-template>
+  </ais-hits>
+</ais-instantsearch>
+</div>
+
+<div fxShow fxHide.gt-sm>
+    <ais-instantsearch
+    [config]="{
+        apiKey: '6a279064ee8ee83c68baa78bc0e83dbd',
+        appId: 'HJN7F66MDX',
+        indexName: 'pathfinderSpells',
+        routing: true
+    }">
+
+    <ais-search-box ></ais-search-box>
+    <br>
+    <ais-hits>
+        <ng-template let-hits="hits" let-results="results">
+            <div *ngIf="hits.length === 0">
+                No results found matching <strong>{{results.query}}</strong>.
+            </div>   
+            <div *ngIf="results.query">
+                <mat-accordion class="example-headers-align">
+                    <div *ngFor="let hit of hits" class="content">
+                        <mat-card>
+                            <mat-card-title>
+                                <ais-highlight attribute="name" [hit]="hit"></ais-highlight>
+                            </mat-card-title>
+                            <mat-card-subtitle>
+                                <h3>Level: {{hit.level}}</h3>
+                            </mat-card-subtitle>
+                            <div *ngIf="hit.area"><strong>Area: </strong>{{hit.area}}<br></div>
+                            <div *ngIf="(hit.duration).length > 1"><strong>Duration: </strong>{{hit.duration}}<br></div>
+                            <div *ngIf="(hit.targets).length > 1"><strong>Target: </strong>{{hit.targets}}<br></div>
+                            <div *ngIf="(hit.range).length > 1"><strong>Range: </strong>{{hit.range}}<br></div>
+                            <div *ngIf="(hit.savingthrow).length > 1"><strong>Save: </strong>{{hit.savingthrow}}<br></div>
+                            <mat-accordion multi="true">
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            Traits
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <mat-chip-list>
+                                        <div *ngFor="let trait of hit.traits">
+                                            <mat-chip>{{trait}}</mat-chip>
+                                        </div>
+                                    </mat-chip-list>
+                                </mat-expansion-panel>
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            Description
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <p>{{hit.text}}</p>
+                                </mat-expansion-panel>
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            Heightening
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div *ngIf="(hit.heightened.heightened2nd).length > 1"><strong>2nd: </strong>{{hit.heightened.heightened2nd}}<br></div>
+                                    <div *ngIf="(hit.heightened.heightened3rd).length > 1"><strong>3rd: </strong>{{hit.heightened.heightened3rd}}<br></div>
+                                    <div *ngIf="(hit.heightened.heightened4th).length > 1"><strong>4th: </strong>{{hit.heightened.heightened4th}}<br></div>
+                                    <div *ngIf="(hit.heightened.heightened5th).length > 1"><strong>5th: </strong>{{hit.heightened.heightened5th}}<br></div>
+                                    <div *ngIf="(hit.heightened.heightened6th).length > 1"><strong>6th: </strong>{{hit.heightened.heightened6th}}<br></div>
+                                    <div *ngIf="(hit.heightened.heightened7th).length > 1"><strong>7th: </strong>{{hit.heightened.heightened7th}}<br></div>
+                                    <div *ngIf="(hit.heightened.heightened8th).length > 1"><strong>8th: </strong>{{hit.heightened.heightened8th}}<br></div>
+                                    <div *ngIf="(hit.heightened.heightened9th).length > 1"><strong>9th: </strong>{{hit.heightened.heightened9th}}<br></div>
+                                    <div *ngIf="(hit.heightened.heightenedplus1).length > 1"><strong>+1: </strong>{{hit.heightened.heightenedplus1}}<br></div>
+                                    <div *ngIf="(hit.heightened.heightenedplus2).length > 1"><strong>+2: </strong>{{hit.heightened.heightenedplus2}}<br></div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                            <mat-card-footer class="padFooter">
+                                <mat-chip-list>
+                                    <mat-chip *ngIf="hit.traditions.includes('arcane')" style="color: rgb(0, 102, 255)">Arcane</mat-chip>
+                                    <mat-chip *ngIf="hit.traditions.includes('divine')" style="color: orange">Divine</mat-chip>
+                                    <mat-chip *ngIf="hit.traditions.includes('occult')" style="color: purple">Occult</mat-chip>
+                                    <mat-chip *ngIf="hit.traditions.includes('primal')" style="color: green">Primal</mat-chip>
+                                </mat-chip-list>
+                            </mat-card-footer>
+                        </mat-card>
+                        <br>
+                    </div>
+                </mat-accordion>
+            </div>
+        </ng-template>
+    </ais-hits>
+    </ais-instantsearch>
+</div>
