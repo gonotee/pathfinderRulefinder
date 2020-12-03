@@ -14,12 +14,21 @@ export class SearchComponentComponent implements OnInit {
   spells: Observable<any>;
 
   names;
+  sortType;
+  config;
 
   constructor(private afs: AngularFirestore) { }
 
   ngOnInit(): void {
     this.spellsCollection = this.afs.collection('spells');
     this.spells = this.spellsCollection.valueChanges();
+    this.sortType = 'Relevance';
+    this.config = {
+      apiKey: '6a279064ee8ee83c68baa78bc0e83dbd',
+      appId: 'HJN7F66MDX',
+      indexName: this.sortType,
+      routing: true,
+    };
   }
 
   findData() {
@@ -66,6 +75,10 @@ export class SearchComponentComponent implements OnInit {
       if (element.level) {
         console.log(element.level);
         addable.level = element.level as string;
+      }
+      // Zero Clause For Level
+      if (element.level == 0) {
+        addable.level = '0';
       }
       if (element.text) {
         // Add to database
