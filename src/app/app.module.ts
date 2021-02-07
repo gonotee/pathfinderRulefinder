@@ -30,6 +30,7 @@ import {RefinementListComponent} from './refinement-list/refinement-list.compone
 import {SortByComponent} from './sort-by/sort-by.component';
 import {ToggleComponent} from './toggle/toggle.component';
 import {ToggleArcaneComponent} from './toggle-arcane/toggle-arcane.component';
+import {FormsModule} from '@angular/forms';
 
 
 const firebaseConfig = {
@@ -72,6 +73,7 @@ const firebaseConfig = {
     MatToolbarModule,
     MatButtonModule,
     MatSlideToggleModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
