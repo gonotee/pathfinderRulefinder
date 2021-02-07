@@ -10,13 +10,16 @@
             <mat-toolbar>
                 <mat-toolbar-row>
                     Pathfinder Search Tool
+                    <mat-slide-toggle (click)="toggleDarkMode()" [(ngModel)]="isDarkMode">Dark Mode</mat-slide-toggle>
                 </mat-toolbar-row>
-            </mat-toolbar>
+              </mat-toolbar>
             <ais-search-box></ais-search-box>
         </div>
     <mat-sidenav-container>
         <mat-sidenav mode="side" style="width: 10%; position: fixed; margin-top: 95px;" opened>
             <div class="padDiv1">
+                <app-toggle-arcane></app-toggle-arcane>
+                <app-sort-by></app-sort-by>
                 <h3>Select Level</h3>
                 <app-refinement-list></app-refinement-list>
             </div>
@@ -39,7 +42,7 @@
                                                 <mat-panel-description>
                                                             <table>
                                                                 <tr>
-                                                                    <th *ngIf="hit.traditions.includes('arcane'); else emptyArcane"><mat-chip-list><mat-chip style="color: rgb(0, 102, 255)">Arcane</mat-chip></mat-chip-list></th>
+                                                                    <th *ngIf="hit.traditions.includes('arcane'); else emptyArcane"><mat-chip-list><mat-chip style="color: blue">Arcane</mat-chip></mat-chip-list></th>
                                                                     <ng-template #emptyArcane><th></th></ng-template>
                                                                     <th *ngIf="hit.traditions.includes('divine'); else emptyDivine"><mat-chip-list><mat-chip style="color: orange">Divine</mat-chip></mat-chip-list></th>
                                                                     <ng-template #emptyDivine><th></th></ng-template>

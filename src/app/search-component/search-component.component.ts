@@ -1,6 +1,7 @@
 /* eslint-disable require-jsdoc */
 import {Component, OnInit} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {ThemeService} from '../theme-service/theme.service';
 import {Observable} from 'rxjs';
 import data from './spells-pf2-v2.json';
 
@@ -17,7 +18,18 @@ export class SearchComponentComponent implements OnInit {
   sortType;
   config;
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore, private themeService: ThemeService) {
+    this.themeService.initTheme();
+    this.isDarkMode = this.themeService.isDarkMode();
+  }
+
+  isDarkMode: boolean;
+
+  toggleDarkMode() {
+    this.isDarkMode = this.themeService.isDarkMode();
+
+    this.isDarkMode ? this.themeService.updateTheme('custom-light-theme') : this.themeService.updateTheme('custom-dark-theme');
+  }
 
   ngOnInit(): void {
     this.spellsCollection = this.afs.collection('spells');
@@ -40,34 +52,38 @@ export class SearchComponentComponent implements OnInit {
   }
 
   addData(): void {
-    const addable = {
-      name: '',
-      level: '',
-      text: '',
-      traits: [],
-      source: '',
-      traditions: [],
-      cast: '',
-      actions: '',
-      range: '',
-      area: '',
-      targets: '',
-      savingthrow: '',
-      duration: '',
-      heightened: {
-        heightened2nd: '',
-        heightened3rd: '',
-        heightened4th: '',
-        heightened5th: '',
-        heightened6th: '',
-        heightened7th: '',
-        heightened8th: '',
-        heightened9th: '',
-        heightenedplus1: '',
-        heightenedplus2: '',
-      },
-    };
     data.forEach((element) => {
+      const addable = {
+        name: '',
+        level: '',
+        text: '',
+        traits: [],
+        source: '',
+        traditions: [],
+        cast: '',
+        actions: '',
+        range: '',
+        area: '',
+        targets: '',
+        savingthrow: '',
+        duration: '',
+        heightened: {
+          heightened2nd: '',
+          heightened3rd: '',
+          heightened4th: '',
+          heightened5th: '',
+          heightened6th: '',
+          heightened7th: '',
+          heightened8th: '',
+          heightened9th: '',
+          heightenedplus1: '',
+          heightenedplus2: '',
+        },
+        isArcane: false,
+        isDivine: false,
+        isOccult: false,
+        isPrimal: false,
+      };
       if (element.name) {
         console.log(element.name);
         addable.name = element.name;
@@ -95,6 +111,18 @@ export class SearchComponentComponent implements OnInit {
       if (element.traditions) {
         // Add to database
         addable.traditions = element.traditions.split(', ');
+      }
+      if (element.traditions.split(', ').includes('arcane')) {
+        addable.isArcane = true;
+      }
+      if (element.traditions.split(', ').includes('divine')) {
+        addable.isDivine = true;
+      }
+      if (element.traditions.split(', ').includes('occult')) {
+        addable.isOccult = true;
+      }
+      if (element.traditions.split(', ').includes('primal')) {
+        addable.isPrimal = true;
       }
       if (element.cast) {
         // Add to database

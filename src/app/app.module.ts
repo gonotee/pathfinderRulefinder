@@ -24,9 +24,12 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
-
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {RefinementListComponent} from './refinement-list/refinement-list.component';
+import {SortByComponent} from './sort-by/sort-by.component';
+import {ToggleComponent} from './toggle/toggle.component';
+import {ToggleArcaneComponent} from './toggle-arcane/toggle-arcane.component';
 
 
 const firebaseConfig = {
@@ -45,6 +48,9 @@ const firebaseConfig = {
     AppComponent,
     SearchComponentComponent,
     RefinementListComponent,
+    SortByComponent,
+    ToggleComponent,
+    ToggleArcaneComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +71,7 @@ const firebaseConfig = {
     MatCheckboxModule,
     MatToolbarModule,
     MatButtonModule,
+    MatSlideToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
