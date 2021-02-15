@@ -1,4 +1,19 @@
-<div class="container">
+<div class="mat-app-background" style="height: 100%;">
+  <div class="app-toolbar">
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+          <span>Pathfinder Search Tool</span>
+          <span class="example-spacer"></span>
+          <mat-slide-toggle (click)="toggleDarkMode()" [(ngModel)]="isDarkMode">Dark Mode</mat-slide-toggle>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <nav mat-tab-nav-bar [backgroundColor]="'primary'">
+      <a mat-tab-link *ngFor="let link of navLinks"
+         (click)="activeLink = link"
+         [active]="activeLink == link" 
+         [routerLink]="link.route"> {{link.label}} </a>
+    </nav>
+  </div>
   <router-outlet></router-outlet>
 </div>
 

@@ -25,12 +25,15 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatTabsModule} from '@angular/material/tabs';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {RefinementListComponent} from './refinement-list/refinement-list.component';
 import {SortByComponent} from './sort-by/sort-by.component';
 import {ToggleComponent} from './toggle/toggle.component';
 import {ToggleArcaneComponent} from './toggle-arcane/toggle-arcane.component';
 import {FormsModule} from '@angular/forms';
+import { ConditionsComponent } from './conditions/conditions.component';
+import { FeatsComponent } from './feats/feats.component';
 
 
 const firebaseConfig = {
@@ -52,6 +55,8 @@ const firebaseConfig = {
     SortByComponent,
     ToggleComponent,
     ToggleArcaneComponent,
+    ConditionsComponent,
+    FeatsComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +78,7 @@ const firebaseConfig = {
     MatToolbarModule,
     MatButtonModule,
     MatSlideToggleModule,
+    MatTabsModule,
     FormsModule,
   ],
   providers: [],

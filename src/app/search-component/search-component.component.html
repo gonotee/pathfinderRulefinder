@@ -1,4 +1,5 @@
-<div fxHide fxShow.gt-sm>
+<!--<div fxHide fxShow.gt-sm>-->
+    <div style="margin-top: 112px;">
     <ais-instantsearch
                 [config]="{
                     apiKey: '6a279064ee8ee83c68baa78bc0e83dbd',
@@ -7,74 +8,74 @@
                     routing: true
                 }">
         <div class="app-toolbar">
-            <mat-toolbar>
-                <mat-toolbar-row>
-                    Pathfinder Search Tool
-                    <mat-slide-toggle (click)="toggleDarkMode()" [(ngModel)]="isDarkMode">Dark Mode</mat-slide-toggle>
-                </mat-toolbar-row>
-              </mat-toolbar>
-            <ais-search-box></ais-search-box>
+            
         </div>
     <mat-sidenav-container>
-        <mat-sidenav mode="side" style="width: 10%; position: fixed; margin-top: 95px;" opened>
+        <mat-sidenav mode="side" style="width: 250px; position: fixed; margin-top: 112px;" opened>
             <div class="padDiv1">
-                <app-toggle-arcane></app-toggle-arcane>
-                <app-sort-by></app-sort-by>
+                <app-sort-by [indicesArray]="[{name: 'pathfinderSpells', label: 'Relevance'}, {name: 'pathfinderSpells_level_asc', label: 'Level Ascending'}]"></app-sort-by>
                 <h3>Select Level</h3>
                 <app-refinement-list></app-refinement-list>
             </div>
         </mat-sidenav>
         <mat-sidenav-content>
-                    <br>
-                    <ais-infinite-hits>
-                        <ng-template let-hits="hits" let-results="results" let-refineNext="showMore">
-                            <div *ngIf="hits.length === 0">
-                                No results found matching <strong>{{results.query}}</strong>.
-                            </div>   
-                            <div>
-                                <mat-accordion class="example-headers-align">
-                                    <div *ngFor="let hit of hits" class="content">
-                                            <mat-expansion-panel>
-                                            <mat-expansion-panel-header>
-                                                <mat-panel-title class="padExpansion">
-                                                    <ais-highlight attribute="name" [hit]="hit"></ais-highlight>
-                                                </mat-panel-title>
-                                                <mat-panel-description>
-                                                            <table>
-                                                                <tr>
-                                                                    <th *ngIf="hit.traditions.includes('arcane'); else emptyArcane"><mat-chip-list><mat-chip style="color: blue">Arcane</mat-chip></mat-chip-list></th>
-                                                                    <ng-template #emptyArcane><th></th></ng-template>
-                                                                    <th *ngIf="hit.traditions.includes('divine'); else emptyDivine"><mat-chip-list><mat-chip style="color: orange">Divine</mat-chip></mat-chip-list></th>
-                                                                    <ng-template #emptyDivine><th></th></ng-template>
-                                                                    <th *ngIf="hit.traditions.includes('occult'); else emptyOccult"><mat-chip-list><mat-chip style="color: purple">Occult</mat-chip></mat-chip-list></th>
-                                                                    <ng-template #emptyOccult><th></th></ng-template>
-                                                                    <th *ngIf="hit.traditions.includes('primal'); else emptyPrimal"><mat-chip-list><mat-chip style="color: green">Primal</mat-chip></mat-chip-list></th>
-                                                                    <ng-template #emptyPrimal><th></th></ng-template>
-                                                                </tr>
-                                                            </table>
-                                                </mat-panel-description>
-                                                <mat-panel-description class="padExpansion">
-                                                    Level: {{hit.level}}
-                                                </mat-panel-description>
-                                            </mat-expansion-panel-header>
+            <div style="position: fixed; z-index: 1000; width: 100%;">
+                <ais-search-box></ais-search-box>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div>
+                <ais-infinite-hits>
+                    <ng-template let-hits="hits" let-results="results" let-refineNext="showMore">
+                        <div *ngIf="hits.length === 0">
+                            No results found matching <strong>{{results.query}}</strong>.
+                        </div>   
+                        <div>
+                            <mat-accordion class="example-headers-align">
+                                <div *ngFor="let hit of hits" class="content">
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title class="padExpansion">
+                                                <ais-highlight attribute="name" [hit]="hit"></ais-highlight>
+                                            </mat-panel-title>
+                                            <mat-panel-description>
+                                                <table>
+                                                    <tr>
+                                                        <th *ngIf="hit.traditions.includes('arcane'); else emptyArcane"><mat-chip-list><mat-chip style="color: blue">Arcane</mat-chip></mat-chip-list></th>
+                                                        <ng-template #emptyArcane><th></th></ng-template>
+                                                        <th *ngIf="hit.traditions.includes('divine'); else emptyDivine"><mat-chip-list><mat-chip style="color: orange">Divine</mat-chip></mat-chip-list></th>
+                                                        <ng-template #emptyDivine><th></th></ng-template>
+                                                        <th *ngIf="hit.traditions.includes('occult'); else emptyOccult"><mat-chip-list><mat-chip style="color: purple">Occult</mat-chip></mat-chip-list></th>
+                                                        <ng-template #emptyOccult><th></th></ng-template>
+                                                        <th *ngIf="hit.traditions.includes('primal'); else emptyPrimal"><mat-chip-list><mat-chip style="color: green">Primal</mat-chip></mat-chip-list></th>
+                                                        <ng-template #emptyPrimal><th></th></ng-template>
+                                                    </tr>
+                                                </table>
+                                            </mat-panel-description>
+                                            <mat-panel-description class="padExpansion">
+                                                Level: {{hit.level}}
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
                                             <p>{{hit.source}}</p>
-                                            </mat-expansion-panel>
-                                            <br>
-                                    </div>
-                                </mat-accordion>
-                            </div>
-                            <div class="showMore-button">
-                                <button mat-raised-button (click)="refineNext($event)">
-                                    Show more
-                                </button>
-                            </div>
-                            
-                        </ng-template>
-                    </ais-infinite-hits>
+                                    </mat-expansion-panel>
+                                    <br>
+                                </div>
+                            </mat-accordion>
+                        </div>
+                        <div class="showMore-button">
+                            <button *ngIf="hits.length >= 20" mat-raised-button (click)="refineNext($event)">
+                                Show more
+                            </button>
+                        </div>    
+                    </ng-template>
+                </ais-infinite-hits>
+            </div>
         </mat-sidenav-content>
     </mat-sidenav-container>
 </ais-instantsearch>
 </div>
+<!--</div>
 
 <div fxShow fxHide.gt-sm>
     <ais-instantsearch
@@ -162,4 +163,4 @@
         </ng-template>
     </ais-hits>
     </ais-instantsearch>
-</div>
+</div>-->

@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-import {Component, Inject, forwardRef} from '@angular/core';
+import {Component, Inject, forwardRef, Input} from '@angular/core';
 import {BaseWidget, NgAisInstantSearch} from 'angular-instantsearch';
 import {connectSortBySelector} from 'instantsearch.js/es/connectors';
 
@@ -16,6 +16,7 @@ import {connectSortBySelector} from 'instantsearch.js/es/connectors';
   `,
 })
 export class SortByComponent extends BaseWidget {
+  @Input() indicesArray: any[];
   state: {
     options: Array<any>;
     currentRefinement: string;
@@ -36,7 +37,7 @@ export class SortByComponent extends BaseWidget {
   }
 
   public ngOnInit() {
-    this.createWidget(connectSortBySelector, {indices: [{name: 'pathfinderSpells', label: 'Relevance'}, {name: 'pathfinderSpells_level_asc', label: 'Level Ascending'}]});
+    this.createWidget(connectSortBySelector, {indices: this.indicesArray});
     super.ngOnInit();
   }
 }

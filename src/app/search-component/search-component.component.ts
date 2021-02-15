@@ -3,7 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {ThemeService} from '../theme-service/theme.service';
 import {Observable} from 'rxjs';
-import data from './spells-pf2-v2.json';
+import data from '../spells-pf2-v2.json';
 
 @Component({
   selector: 'app-search-component',
@@ -41,14 +41,6 @@ export class SearchComponentComponent implements OnInit {
       indexName: this.sortType,
       routing: true,
     };
-  }
-
-  findData() {
-    data.forEach((element) => {
-      if (element.traits.length > 6) {
-        console.log(element.name);
-      }
-    });
   }
 
   addData(): void {

@@ -1,0 +1,57 @@
+<div style="margin-top: 112px;">
+<ais-instantsearch
+                [config]="{
+                    apiKey: '6a279064ee8ee83c68baa78bc0e83dbd',
+                    appId: 'HJN7F66MDX',
+                    indexName: 'pathfinderConditions',
+                    routing: true
+                }">
+    <mat-sidenav-container>
+        <mat-sidenav mode="side" style="width: 10%; position: fixed; margin-top: 110px;" opened>
+            <div class="padDiv1">
+                <app-sort-by [indicesArray]="[{name: 'pathfinderConditions', label: 'Relevance'}, {name: 'pathfinderConditions_alpha_asc', label: 'Alphabetical Ascending'}]"></app-sort-by>
+            </div>
+        </mat-sidenav>
+        <mat-sidenav-content>
+                    <div style="position: fixed; z-index: 1000; width: 100%;">
+                        <ais-search-box></ais-search-box>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <ais-infinite-hits>
+                        <ng-template let-hits="hits" let-results="results" let-refineNext="showMore">
+                            <div *ngIf="hits.length === 0">
+                                No results found matching <strong>{{results.query}}</strong>.
+                            </div>   
+                            <div>
+                                <mat-accordion class="example-headers-align">
+                                    <div *ngFor="let hit of hits" class="content">
+                                            <mat-expansion-panel>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title class="mat-panel-title">
+                                                    <ais-highlight attribute="name" [hit]="hit"></ais-highlight>
+                                                </mat-panel-title>
+                                                <mat-panel-description class="mat-panel-description">
+                                                    <ais-highlight attribute="text" [hit]="hit"></ais-highlight>
+                                                </mat-panel-description>
+                                            </mat-expansion-panel-header>
+                                            <div class="large-text"><ais-highlight attribute="text" [hit]="hit"></ais-highlight></div>
+                                            <br>
+                                            <p>{{hit.source}}</p>
+                                            </mat-expansion-panel>
+                                            <br>
+                                    </div>
+                                </mat-accordion>
+                            </div>
+                            <div *ngIf="hits.length >= 20" class="showMore-button">
+                                <button mat-raised-button (click)="refineNext($event)">
+                                    Show more
+                                </button>
+                            </div>
+                        </ng-template>
+                    </ais-infinite-hits>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</ais-instantsearch>
+</div>
