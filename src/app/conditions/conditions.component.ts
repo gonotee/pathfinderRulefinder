@@ -4,6 +4,7 @@ import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firest
 import {ThemeService} from '../theme-service/theme.service';
 import {Observable} from 'rxjs';
 import data from '../conditions-pf2.json';
+import {AngularFireFunctions} from '@angular/fire/functions';
 
 @Component({
   selector: 'app-conditions',
@@ -13,12 +14,12 @@ import data from '../conditions-pf2.json';
 export class ConditionsComponent implements OnInit {
   conditionsCollection: AngularFirestoreCollection<any>;
   conditions: Observable<any>;
-
+  searchLoaded: Promise<boolean>;
   names;
   sortType;
   config;
 
-  constructor(private afs: AngularFirestore, private themeService: ThemeService) {
+  constructor(private afs: AngularFirestore, private themeService: ThemeService, private fns: AngularFireFunctions) {
     this.themeService.initTheme();
     this.isDarkMode = this.themeService.isDarkMode();
   }
@@ -32,15 +33,19 @@ export class ConditionsComponent implements OnInit {
    }
 
    ngOnInit(): void {
+     const callable = this.fns.httpsCallable('getSecureKey');
+     this.sortType = 'pathfinderConditions';
+     callable({restrictedIndex: this.sortType}).subscribe((data) => {
+       this.config = {
+         apiKey: data.key,
+         appId: 'HJN7F66MDX',
+         indexName: this.sortType,
+         routing: true,
+       };
+       this.searchLoaded = Promise.resolve(true);
+     });
      this.conditionsCollection = this.afs.collection('conditions');
      this.conditions = this.conditionsCollection.valueChanges();
-     this.sortType = 'Relevance';
-     this.config = {
-       apiKey: '6a279064ee8ee83c68baa78bc0e83dbd',
-       appId: 'HJN7F66MDX',
-       indexName: this.sortType,
-       routing: true,
-     };
    }
 
    addData(): void {
