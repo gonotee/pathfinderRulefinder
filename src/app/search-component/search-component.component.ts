@@ -4,6 +4,7 @@ import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firest
 import {ThemeService} from '../theme-service/theme.service';
 import {Observable} from 'rxjs';
 import data from '../spells-pf2-v2.json';
+import {AngularFireFunctions} from '@angular/fire/functions';
 
 @Component({
   selector: 'app-search-component',
@@ -13,12 +14,12 @@ import data from '../spells-pf2-v2.json';
 export class SearchComponentComponent implements OnInit {
   spellsCollection: AngularFirestoreCollection<any>;
   spells: Observable<any>;
-
+  searchLoaded: Promise<boolean>;
   names;
   sortType;
   config;
 
-  constructor(private afs: AngularFirestore, private themeService: ThemeService) {
+  constructor(private afs: AngularFirestore, private themeService: ThemeService, private fns: AngularFireFunctions) {
     this.themeService.initTheme();
     this.isDarkMode = this.themeService.isDarkMode();
   }
@@ -34,13 +35,17 @@ export class SearchComponentComponent implements OnInit {
   ngOnInit(): void {
     this.spellsCollection = this.afs.collection('spells');
     this.spells = this.spellsCollection.valueChanges();
-    this.sortType = 'Relevance';
-    this.config = {
-      apiKey: '6a279064ee8ee83c68baa78bc0e83dbd',
-      appId: 'HJN7F66MDX',
-      indexName: this.sortType,
-      routing: true,
-    };
+    const callable = this.fns.httpsCallable('getSecureKey');
+    this.sortType = 'pathfinderSpells';
+    callable({restrictedIndex: this.sortType}).subscribe((data) => {
+      this.config = {
+        apiKey: data.key,
+        appId: 'HJN7F66MDX',
+        indexName: this.sortType,
+        routing: true,
+      };
+      this.searchLoaded = Promise.resolve(true);
+    });
   }
 
   addData(): void {
