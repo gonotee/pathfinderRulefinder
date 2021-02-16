@@ -3,9 +3,21 @@ const algoliasearch = require('algoliasearch');
 
 const APP_ID = functions.config().algolia.app;
 const ADMIN_KEY = functions.config().algolia.key;
+const SEARCH_ONLY_KEY = functions.config().algolia.searchkey;
 
 const client = algoliasearch(APP_ID, ADMIN_KEY);
 const index = client.initIndex('pathfinderSpells');
+
+exports.getSecureKey = functions.https.onCall((data, context) => {
+  const restrictedIndex = data.restrictedIndex;
+  const secureApiKey = client.generateSecuredApiKey(
+      SEARCH_ONLY_KEY,
+      {
+        restrictIndices: restrictedIndex,
+      },
+  );
+  return {key: secureApiKey};
+});
 
 exports.addToIndex = functions.firestore.document('spells/{spellId}')
     .onCreate((snapshot) => {

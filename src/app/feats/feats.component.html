@@ -1,12 +1,6 @@
-<p>feats works!</p>
-<div style="margin-top: 112px;">
+<div *ngIf="searchLoaded | async" style="margin-top: 112px;">
     <ais-instantsearch
-                    [config]="{
-                        apiKey: '6a279064ee8ee83c68baa78bc0e83dbd',
-                        appId: 'HJN7F66MDX',
-                        indexName: 'pathfinderFeats',
-                        routing: true
-                    }">
+                    [config]=config>
         <mat-sidenav-container>
             <mat-sidenav mode="side" style="width: 10%; position: fixed; margin-top: 110px;" opened>
                 <div class="padDiv1">

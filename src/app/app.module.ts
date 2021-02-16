@@ -32,8 +32,9 @@ import {SortByComponent} from './sort-by/sort-by.component';
 import {ToggleComponent} from './toggle/toggle.component';
 import {ToggleArcaneComponent} from './toggle-arcane/toggle-arcane.component';
 import {FormsModule} from '@angular/forms';
-import { ConditionsComponent } from './conditions/conditions.component';
-import { FeatsComponent } from './feats/feats.component';
+import {ConditionsComponent} from './conditions/conditions.component';
+import {FeatsComponent} from './feats/feats.component';
+import {AngularFireFunctionsModule} from '@angular/fire/functions';
 
 
 const firebaseConfig = {
@@ -65,6 +66,7 @@ const firebaseConfig = {
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
+    AngularFireFunctionsModule,
     BrowserAnimationsModule,
     NgAisModule.forRoot(),
     MatExpansionModule,

@@ -1,0 +1,70 @@
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  /* justify-content: space-between; */
+  align-items: left;
+}
+
+.example-headers-align .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+
+table {
+    table-layout: fixed ;
+    width: 300px;
+  }
+  th {
+    width: 25% ;
+  }
+
+.padFooter {
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.padDiv1 {
+  padding-top: 10px;
+  padding-left: 10%;
+}
+
+.padDiv2 {
+  padding-left: 10%;
+}
+
+.padExpansion {
+  padding-top: 10px;
+}
+
+.app-toolbar {
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+
+.showMore-button {
+  padding-bottom: 15px;
+  margin-left: 40%;
+  width: 50%;
+}
+
+mat-panel-description{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  width: 100%;
+  display: block !important;
+}
+
+mat-panel-title{
+  white-space:nowrap;
+}
+
+.large-text{
+  font-size: 18px;
+  line-height: 1.6;
+}
