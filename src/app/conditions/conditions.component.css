@@ -68,3 +68,20 @@ mat-panel-title{
   font-size: 18px;
   line-height: 1.6;
 }
+
+.small-margin {
+  margin-top: 56px;
+}
+
+.large-margin {
+  margin-top: 112px;
+}
+
+.thinscreen-toolbar {
+  margin-top: 56px;
+}
+
+.single-action-icon {
+  width: 20px;
+  height: 20px;
+}
