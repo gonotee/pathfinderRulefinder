@@ -1,19 +1,52 @@
-<div class="mat-app-background" style="height: 100%;">
-  <div class="app-toolbar">
-    <mat-toolbar color="primary">
-      <mat-toolbar-row>
-          <span>Pathfinder Search Tool</span>
-          <span class="example-spacer"></span>
-          <mat-slide-toggle (click)="toggleDarkMode()" [(ngModel)]="isDarkMode">Dark Mode</mat-slide-toggle>
-      </mat-toolbar-row>
-    </mat-toolbar>
-    <nav mat-tab-nav-bar [backgroundColor]="'primary'">
-      <a mat-tab-link *ngFor="let link of navLinks"
-         (click)="activeLink = link"
-         [active]="activeLink == link" 
-         [routerLink]="link.route"> {{link.label}} </a>
-    </nav>
-  </div>
-  <router-outlet></router-outlet>
+<div class="mat-app-background" *ngIf="this.isLarge; then widescreen else thinscreen">
+  <!-- template will replace this div -->
 </div>
 
+<ng-template #widescreen>
+  <div class="mat-app-background" style="height: 100%;">
+    <div class="app-toolbar">
+      <mat-toolbar color="primary">
+        <mat-toolbar-row>
+            <span>Pathfinder Search Tool</span>
+            <span class="example-spacer"></span>
+            <mat-slide-toggle (click)="toggleDarkMode()" [(ngModel)]="isDarkMode">Dark Mode</mat-slide-toggle>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <nav mat-tab-nav-bar [backgroundColor]="'primary'">
+        <a mat-tab-link *ngFor="let link of navLinks"
+           (click)="activeLink = link"
+           [active]="activeLink == link" 
+           [routerLink]="link.route"> {{link.label}} </a>
+      </nav>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</ng-template>
+
+<ng-template #thinscreen>
+  <div class="mat-app-background">
+    <div class="app-toolbar">
+      <mat-toolbar color="primary">
+        <mat-toolbar-row>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="" routerLinkActive="active">Spells</button>
+            <button mat-menu-item routerLink="conditions" routerLinkActive="active">Conditions</button>
+            <button mat-menu-item routerLink="feats" routerLinkActive="active">Feats</button>
+          </mat-menu>
+          <span class="example-spacer"></span>
+          <span>Pathfinder Search Tool</span>
+          <span class="example-spacer"></span>
+          <button mat-icon-button (click)="toggleDarkMode()">
+            <mat-icon>
+              {{mobileThemeIcon}}
+            </mat-icon>
+          </button>
+        </mat-toolbar-row>
+      </mat-toolbar>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</ng-template>

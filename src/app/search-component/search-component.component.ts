@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {ThemeService} from '../theme-service/theme.service';
 import {Observable} from 'rxjs';
@@ -18,6 +18,9 @@ export class SearchComponentComponent implements OnInit {
   names;
   sortType;
   config;
+  sidenavMode: string;
+  actionIconUrl: string;
+  actionIconType: string;
 
   constructor(private afs: AngularFirestore, private themeService: ThemeService, private fns: AngularFireFunctions) {
     this.themeService.initTheme();
@@ -32,7 +35,37 @@ export class SearchComponentComponent implements OnInit {
     this.isDarkMode ? this.themeService.updateTheme('custom-light-theme') : this.themeService.updateTheme('custom-dark-theme');
   }
 
+  public screenWidth: any = window.innerWidth;
+  public isLarge: boolean = true;
+
+  public opened: boolean;
+
+  /** @function
+     * @name checkWidth
+     * @listens window:resize
+     * @hostListener
+     * @description checkWidth listens to window resize and adjusts the isLarge Boolean.
+     */
+  @HostListener('window:resize') checkWidth() {
+    //  alert('it works!');
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 600) {
+      this.isLarge = false;
+    } else {
+      this.isLarge = true;
+    }
+  }
+
   ngOnInit(): void {
+    if (this.screenWidth <= 600) {
+      this.isLarge = false;
+      this.opened = false;
+      this.sidenavMode = 'over';
+    } else {
+      this.isLarge = true;
+      this.opened = true;
+      this.sidenavMode = 'side';
+    }
     this.spellsCollection = this.afs.collection('spells');
     this.spells = this.spellsCollection.valueChanges();
     const callable = this.fns.httpsCallable('getSecureKey');
@@ -46,6 +79,33 @@ export class SearchComponentComponent implements OnInit {
       };
       this.searchLoaded = Promise.resolve(true);
     });
+  }
+
+  hasValues(obj) {
+    for (const key in obj) {
+      if (obj[key] !== null && obj[key] != '') {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  determineActionNum(hitActions) {
+    if (hitActions) {
+      if (hitActions == 'Single Action') {
+        return 'singleAction';
+      } else if (hitActions == 'Two Actions') {
+        return 'twoActions';
+      } else if (hitActions == 'Three Actions') {
+        return 'threeActions';
+      } else if (hitActions == 'Reaction') {
+        return 'reaction';
+      } else if (hitActions == 'Free Action') {
+        return 'freeAction';
+      }
+    } else {
+      return '';
+    }
   }
 
   addData(): void {
@@ -127,6 +187,7 @@ export class SearchComponentComponent implements OnInit {
       }
       if (element.actions) {
         // Add to database
+        addable.actions = element.actions;
       }
       if (element.range) {
         // Add to database
