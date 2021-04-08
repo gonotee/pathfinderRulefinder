@@ -26,6 +26,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {RefinementListComponent} from './refinement-list/refinement-list.component';
 import {SortByComponent} from './sort-by/sort-by.component';
@@ -35,6 +37,8 @@ import {FormsModule} from '@angular/forms';
 import {ConditionsComponent} from './conditions/conditions.component';
 import {FeatsComponent} from './feats/feats.component';
 import {AngularFireFunctionsModule} from '@angular/fire/functions';
+import {MobileSpellsComponent} from './mobile-spells/mobile-spells.component';
+import {CommonModule} from '@angular/common';
 
 
 const firebaseConfig = {
@@ -58,9 +62,11 @@ const firebaseConfig = {
     ToggleArcaneComponent,
     ConditionsComponent,
     FeatsComponent,
+    MobileSpellsComponent,
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule, // firestore
@@ -81,6 +87,8 @@ const firebaseConfig = {
     MatButtonModule,
     MatSlideToggleModule,
     MatTabsModule,
+    MatIconModule,
+    MatMenuModule,
     FormsModule,
   ],
   providers: [],

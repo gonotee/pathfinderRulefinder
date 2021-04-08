@@ -1,52 +1,101 @@
-<div *ngIf="searchLoaded | async" style="margin-top: 112px;">
-<ais-instantsearch
-                [config]=config>
+<div [ngClass]="isLarge == true ? 'large-margin': ''" class="mat-app-background">
+    <ais-instantsearch
+                [config]="{
+                    apiKey: '6a279064ee8ee83c68baa78bc0e83dbd',
+                    appId: 'HJN7F66MDX',
+                    indexName: 'pathfinderConditions',
+                    routing: true
+                }">
     <mat-sidenav-container>
-        <mat-sidenav mode="side" style="width: 10%; position: fixed; margin-top: 110px;" opened>
+        <mat-sidenav #sidenav [mode]="sidenavMode" [(opened)]="opened" style="width: 250px; position: fixed; margin-top: 112px;" opened>
             <div class="padDiv1">
                 <app-sort-by [indicesArray]="[{name: 'pathfinderConditions', label: 'Relevance'}, {name: 'pathfinderConditions_alpha_asc', label: 'Alphabetical Ascending'}]"></app-sort-by>
             </div>
         </mat-sidenav>
-        <mat-sidenav-content>
-                    <div style="position: fixed; z-index: 1000; width: 100%;">
-                        <ais-search-box></ais-search-box>
-                    </div>
-                    <br>
-                    <br>
-                    <br>
-                    <ais-infinite-hits>
-                        <ng-template let-hits="hits" let-results="results" let-refineNext="showMore">
-                            <div *ngIf="hits.length === 0">
-                                No results found matching <strong>{{results.query}}</strong>.
-                            </div>   
-                            <div>
-                                <mat-accordion class="example-headers-align">
-                                    <div *ngFor="let hit of hits" class="content">
-                                            <mat-expansion-panel>
-                                            <mat-expansion-panel-header>
-                                                <mat-panel-title class="mat-panel-title">
-                                                    <ais-highlight attribute="name" [hit]="hit"></ais-highlight>
-                                                </mat-panel-title>
-                                                <mat-panel-description class="mat-panel-description">
-                                                    <ais-highlight attribute="text" [hit]="hit"></ais-highlight>
-                                                </mat-panel-description>
-                                            </mat-expansion-panel-header>
-                                            <div class="large-text"><ais-highlight attribute="text" [hit]="hit"></ais-highlight></div>
-                                            <br>
-                                            <p>{{hit.source}}</p>
-                                            </mat-expansion-panel>
-                                            <br>
+        <mat-sidenav-content [ngClass]="isLarge == false ? 'thinscreen-toolbar': ''">
+            <mat-toolbar *ngIf="!isLarge" style="position: fixed; z-index: 1000; width: 100%;" color="primary">
+                <mat-toolbar-row>
+                    <button mat-icon-button onclick="this.blur()" (click)="sidenav.toggle()">
+                        <mat-icon>
+                            filter_list
+                        </mat-icon>
+                    </button>
+                </mat-toolbar-row>
+            </mat-toolbar>
+            <div [ngClass]="isLarge == false ? 'small-margin': ''" style="position: fixed; z-index: 1000; width: 100%;">
+                <ais-search-box></ais-search-box>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div [ngClass]="isLarge == false ? 'small-margin': 'sideMargin'">
+                <ais-infinite-hits>
+                    <ng-template let-hits="hits" let-results="results" let-refine="showMore">
+                        <div *ngIf="hits.length === 0">
+                            No results found matching <strong>{{results.query}}</strong>.
+                        </div>   
+                        <div>
+                            <mat-accordion class="example-headers-align">
+                                <div *ngFor="let hit of hits" class="content">
+                                    <div *ngIf="isLarge">
+                                        <ng-container *ngTemplateOutlet="widescreenSearchContent;context:{hit: hit}"></ng-container> <!--WideScrren Template Fills Here-->
                                     </div>
-                                </mat-accordion>
-                            </div>
-                            <div *ngIf="hits.length >= 20" class="showMore-button">
-                                <button mat-raised-button (click)="refineNext($event)">
-                                    Show more
-                                </button>
-                            </div>
-                        </ng-template>
-                    </ais-infinite-hits>
+                                    <div *ngIf="!isLarge">
+                                        <ng-container *ngTemplateOutlet="thinscreenSearchContent;context:{hit: hit}"></ng-container> <!--ThinScrren Template Fills Here-->
+                                    </div>
+                                </div>
+                            </mat-accordion>
+                        </div>
+                        <div class="showMore-button">
+                            <button *ngIf="hits.length >= 20" mat-raised-button (click)="refine($event)">
+                                Show more
+                            </button>
+                        </div> 
+                    </ng-template>
+                </ais-infinite-hits>
+            </div>
         </mat-sidenav-content>
     </mat-sidenav-container>
 </ais-instantsearch>
 </div>
+
+<ng-template #widescreenSearchContent let-hit="hit">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header onclick="this.blur()">
+            <mat-panel-title class="mat-panel-title">
+                <ais-highlight attribute="name" [hit]="hit"></ais-highlight>
+            </mat-panel-title>
+            <mat-panel-description class="mat-panel-description">
+                <ais-highlight attribute="text" [hit]="hit"></ais-highlight>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <br>
+        <div class="large-text"><ais-highlight attribute="text" [hit]="hit"></ais-highlight></div>
+        <br>
+        <p>{{hit.source}}</p>
+        </mat-expansion-panel>
+        <br>
+</ng-template>
+
+<ng-template #thinscreenSearchContent let-hit="hit">
+    <mat-card>
+        <mat-card-title>
+            <ais-highlight attribute="name" [hit]="hit"></ais-highlight>
+        </mat-card-title>
+        <br>
+        <mat-accordion class="example-headers-align">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header onclick="this.blur()">
+                    <mat-panel-title class="mat-panel-title">
+                        Description
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="large-text"><ais-highlight attribute="text" [hit]="hit"></ais-highlight></div>
+                <br>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <br>
+        <p>{{hit.source}}</p>
+    </mat-card>
+    <br>
+</ng-template>
