@@ -127,11 +127,11 @@
 </ng-template>
 
 <ng-template #ActionIcon let-hit="hit">
-    <img *ngIf="determineActionNum(hit.actions) == 'singleAction'" src="../../assets/SingleAction.png" style="width: 20px; height: 20px;">
-    <img *ngIf="determineActionNum(hit.actions) == 'twoActions'" src="../../assets/TwoActions.png" style="width: 30px; height: 20px;">
-    <img *ngIf="determineActionNum(hit.actions) == 'threeActions'" src="../../assets/ThreeActions.png" style="width: 35px; height: 20px;">
-    <img *ngIf="determineActionNum(hit.actions) == 'reaction'" src="../../assets/Reaction.png" style="width: 20px; height: 20px;">
-    <img *ngIf="determineActionNum(hit.actions) == 'freeAction'" src="../../assets/FreeAction.png" style="width: 20px; height: 20px;">
+    <img *ngIf="determineActionNum(hit.actions) == 'singleAction'" src="/assets/SingleAction.png" style="width: 20px; height: 20px;">
+    <img *ngIf="determineActionNum(hit.actions) == 'twoActions'" src="/assets/TwoActions.png" style="width: 30px; height: 20px;">
+    <img *ngIf="determineActionNum(hit.actions) == 'threeActions'" src="/assets/ThreeActions.png" style="width: 35px; height: 20px;">
+    <img *ngIf="determineActionNum(hit.actions) == 'reaction'" src="/assets/Reaction.png" style="width: 20px; height: 20px;">
+    <img *ngIf="determineActionNum(hit.actions) == 'freeAction'" src="/assets/FreeAction.png" style="width: 20px; height: 20px;">
     <div *ngIf="determineActionNum(hit.actions) == ''"></div>
 </ng-template>
 
