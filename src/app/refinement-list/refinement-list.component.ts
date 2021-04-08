@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-import {Component, Inject, forwardRef} from '@angular/core';
+import {Component, Inject, forwardRef, Input} from '@angular/core';
 import {BaseWidget, NgAisInstantSearch} from 'angular-instantsearch';
 import {connectRefinementList} from 'instantsearch.js/es/connectors';
 
@@ -9,11 +9,15 @@ import {connectRefinementList} from 'instantsearch.js/es/connectors';
   <p *ngFor="let item of state.items">
     <mat-checkbox
           (click)="state.refine(item.value)"
-          [checked]="item.isRefined" > {{ item.label }} ({{ item.count }}) </mat-checkbox>
+          [checked]="item.isRefined" > {{ capitalizeFirstLetter(item.label) }} ({{ item.count }}) </mat-checkbox>
   </p>
   `,
 })
 export class RefinementListComponent extends BaseWidget {
+  @Input() attribute: string;
+  @Input() operator: string;
+  @Input() sortBy: any[];
+  @Input() limit: number;
   state: {
     items: { label: string; value: string }[];
     createUrl: () => string;
@@ -34,8 +38,12 @@ export class RefinementListComponent extends BaseWidget {
     super('RefinementList');
   }
 
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   public ngOnInit() {
-    this.createWidget(connectRefinementList, {attributeName: 'level', sortBy: []});
+    this.createWidget(connectRefinementList, {attributeName: this.attribute, sortBy: this.sortBy, limit: this.limit, operator: this.operator});
     super.ngOnInit();
   }
 }

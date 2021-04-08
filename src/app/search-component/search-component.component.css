@@ -69,6 +69,14 @@ table {
   height: 20px;
 }
 
+.mat-chip.mat-standard-chip::after {
+  background: #0000;
+}
+
+.sideMargin {
+  margin-left: 1%;
+  margin-right: 1%;
+}
 
 
   

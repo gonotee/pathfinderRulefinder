@@ -28,7 +28,7 @@
             <br>
             <br>
             <br>
-            <div [ngClass]="isLarge == false ? 'small-margin': ''">
+            <div [ngClass]="isLarge == false ? 'small-margin': 'sideMargin'">
                 <ais-infinite-hits>
                     <ng-template let-hits="hits" let-results="results" let-refine="showMore">
                         <div *ngIf="hits.length === 0">
@@ -57,10 +57,11 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
 </ais-instantsearch>
+</div>
 
 <ng-template #widescreenSearchContent let-hit="hit">
     <mat-expansion-panel>
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header onclick="this.blur()">
             <mat-panel-title class="mat-panel-title">
                 <ais-highlight attribute="name" [hit]="hit"></ais-highlight>
             </mat-panel-title>
@@ -68,6 +69,7 @@
                 <ais-highlight attribute="text" [hit]="hit"></ais-highlight>
             </mat-panel-description>
         </mat-expansion-panel-header>
+        <br>
         <div class="large-text"><ais-highlight attribute="text" [hit]="hit"></ais-highlight></div>
         <br>
         <p>{{hit.source}}</p>
@@ -80,5 +82,20 @@
         <mat-card-title>
             <ais-highlight attribute="name" [hit]="hit"></ais-highlight>
         </mat-card-title>
+        <br>
+        <mat-accordion class="example-headers-align">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header onclick="this.blur()">
+                    <mat-panel-title class="mat-panel-title">
+                        Description
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="large-text"><ais-highlight attribute="text" [hit]="hit"></ais-highlight></div>
+                <br>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <br>
+        <p>{{hit.source}}</p>
     </mat-card>
+    <br>
 </ng-template>

@@ -1,11 +1,11 @@
 @import '~@angular/material/theming';
 @include mat-core();
 
-$custom-theme-primary: mat-palette($mat-deep-orange);
-$custom-theme-accent: mat-palette($mat-grey);
-$custom-theme-warn: mat-palette($mat-red);
+$light-primary: mat-palette($mat-deep-orange);
+$light-accent: mat-palette($mat-grey);
+$light-warn: mat-palette($mat-red);
 
-$custom-light-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
+$custom-light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
 
 @include angular-material-theme($custom-light-theme);
 
@@ -21,13 +21,54 @@ $dark-theme:   mat-dark-theme((
   )
 ));
 
+$universal-gray-accent: mat-palette($mat-grey);
+
 // Include the dark color styles inside of a block with a CSS class. You can make this
 // CSS class whatever you want. In this example, any component inside of an element with
 // `.unicorn-dark-theme` will be affected by this alternate dark theme instead of the default theme.
 .custom-dark-theme {
   @include angular-material-color($dark-theme);
+  .mat-card-accent {
+    background-color: mat-color($dark-accent, darker);
+  }
+  .mat-expansion-panel-content {
+    font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+  }
+  .mat-expansion-panel-header {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    background-color: mat-color($universal-gray-accent, darker);
+  }
+  .mat-expansion-panel-header.mat-expanded:hover {
+    background: mat-color($universal-gray-accent, darker);
+  }
+  .chip-header {
+    background-color: mat-color($universal-gray-accent) !important;
+  }
 }
 
 .custom-light-theme {
   @include angular-material-theme($custom-light-theme);
+  .mat-card-accent {
+    background-color: mat-color($light-accent);
+  }
+  .mat-expansion-panel-content {
+    font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+    
+  }
+  .mat-expansion-panel-header {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    background-color: mat-color($universal-gray-accent, lighter);
+  }
+  .mat-expansion-panel-header.mat-expanded:hover {
+    background: mat-color($universal-gray-accent, lighter);
+  }
+  .mat-drawer {
+    background-color: mat-color($universal-gray-accent, lighter);
+  }
 }
